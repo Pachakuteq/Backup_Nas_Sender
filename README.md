@@ -33,9 +33,13 @@ This script automatically backs up files from your laptop to a Raspberry Pi NAS 
 git clone https://github.com/Pachakuteq/Backup_Nas_Sender.git
 ```
 
-3. Edit your correct information on the .env file 
+3. Create your .env file on the same directory as your backup_script.sh file and called it backup.env
 ```
-PI_USER="pi" <-- user of your Raspberry Pi
+## Add this:
+
+#!/bin/bash
+
+PI_USER="pi" <-- your Raspberry Pi User
 PI_PATH="/srv/path/to/your/share folder"  
 PI_HOST="pi.ip.address"
 ```
@@ -49,7 +53,7 @@ ssh-keygen -t rsa -b 4096
 ssh-copy-id pi@pi.ip.address
 ```
 
-5. Create Script Directory
+5. Create Scripts Directory
 ```
 mkdir -p ~/scripts
 cd ~/scripts
