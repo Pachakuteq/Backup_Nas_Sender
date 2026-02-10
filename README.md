@@ -37,7 +37,7 @@ git clone https://github.com/Pachakuteq/Backup_Nas_Sender.git
 ```
 PI_USER="pi" <-- user of your Raspberry Pi
 PI_PATH="/srv/path/to/your/share folder"  
-PI_HOST="ip address of your pi"
+PI_HOST="pi.ip.address"
 ```
 
 4. Set up SSH Keys (One-time setup)
@@ -46,7 +46,7 @@ PI_HOST="ip address of your pi"
 ssh-keygen -t rsa -b 4096
 
 # Copy key to Raspberry Pi
-ssh-copy-id pi@192.168.1.11
+ssh-copy-id pi@pi.ip.address
 ```
 
 5. Create Script Directory
@@ -54,6 +54,7 @@ ssh-copy-id pi@192.168.1.11
 mkdir -p ~/scripts
 cd ~/scripts
 ```
+
 6. copy script to ~/scripts/
 ```
 cp "/.../backup_script.sh" ~/scripts/
@@ -98,6 +99,7 @@ This runs the backup:
 ```
 12. the end
 
+
 ## Configuration
 
 ### Change Backup Frequency
@@ -114,10 +116,10 @@ Edit the second number in anacrontab:
 
 ## Files Location
 
-Script: ~/scripts/backup_script.sh
-Config: ~/scripts/backup.env
-Logs: Stored on Pi at BackUp-files/backup_YYYY-MM-DD.log
-Anacron config: /etc/anacrontab
+- Script: ~/scripts/backup_script.sh
+- Config: ~/scripts/backup.env
+- Logs: Stored on Pi at BackUp-files/backup_YYYY-MM-DD.log
+- Anacron config: /etc/anacrontab
 
 ## Future Enhancements
 
