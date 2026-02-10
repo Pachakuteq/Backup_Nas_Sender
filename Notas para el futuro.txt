@@ -1,0 +1,146 @@
+## para buscar ip de mis dispositivos en la red:
+- en wsl podemos usar nmap 
+- > ip a (mostrara la ip de mi red y la subnet que dice inet) 
+- > nmap -sn 192.168.1.0/24 o sudo arp-scan --localnet (mas rápido)
+
+
+## cuando tengo desconectar el raspberry pi:
+-desde la ssh
+a. sudo shutdown -h now 
+b. sudo poweroff
+
+
+## en caso de que algo ocurrió y el pi no conecta por ssh hay que reflash el SD:
+1. reflash SD con el os raspberry que viene del programa raspberry pi imager (selecciona modelo y OS no desktop enviroment) y OS 64bts lite 
+2. reconectar y tratar de hacer ping y luego ssh 
+3. si no funcióna usamos nmap -Pn -p 22 "ipaddress"  para confirmar que el puerto 22 esta abierto y el ssh esta abierto igual 
+4. si no funciona tenemos que conectar un monitor y un teclado al raspberry pi 
+5. luego entramos con el user y contraseña: pi / root 
+6. usamos sudo systemctl status ssh para verificar el estado de ssh debe estar enable y active 
+7. si no lo esta usamos sudo systemctl enable ssh y sudo systemctl start ssh 
+8. luego para confirmar el ip address usamos: hostname -I , puede que nos salga dos ip  si es asi probamos los dos 
+9. si todo esta activo volvemos a wsl y probamos ssh con el ip correcto y nos preguntara si queremos permitir fingerprint acces. decimos que yes
+10. y accedemos a ssh de pi
+11. actualizamos y upgrade
+12. luego instalamos programas para el NAS, sudo wget -O - https://raw.githubusercontent.com/OpenMediaVault-Plugin Developers/installScript/master/install | sudo bash
+13. puede que después de instalar openmediavault se desconecte el ssh y hay que conectar de nuevo pero puede que el pi address sea diferente. confirma con los comandos que vimos antes
+14. una vez vuelta adentro. para confirmar OMV. usamos ls
+15. vamos a un browser y ponemos el ip address que conocemos  de pi 
+16. deberíamos ver las configuraciones de OMV 
+17. cambiamos el user y pswd de OMV- este es  admin / rootin
+18. conectamos el external harddrive al pi 
+19. vamos a OMV y vamos a storage - Disks y debería aparecer ahi 
+20. vamos a file systems y montamos el disco externo ponle tag * y apply 
+21. luego vamos a share folders y agregamos uno con el disk que montamos y apply 
+22. vamos a services y confirmamos que opción queremos. nfs = Linux . smb = windows 
+23. los dos es settings > enable > shares y seleccionamos el disk que creamos y apply
+24. luego creamos el share folder en windows para confirmar que tenemos acceso 
+25. si tenemos problemas con el share folder confirmemos que el user pi tenga la contraseña correcta
+26. en OMV vamos a users y a users otra vez debería aparecer una opción que dice pi . lo editamos y ponemos una nueva contraseña
+27. creamos el folder en el fle explorer de windows haciendo click derecho y seleccionando agregar ubicación de red
+28. nos pedirá por el nas info : \\ipaddressofpi\pi y luego credenciales y luego el nombre para el folder
+29. chequeamos el bash file para hacer back up 
+30. fin 
+
+
+## confirmando que el backup bash file funciona:
+- el bash script esta usando unas variables de enviroment específicos que aparecen en el bashrc profile
+- esos son pi_host: ip address de pi (192.168.1.11),  pi_path: este lo encuentras en el sharefolder en OMV web y empieza con /srv/ o /sharefolder/ , pi_user: pi (casi siempre)
+- el bash file funciona usando info de un env file. para asegurase que esta yendo al destino correcto. usando la info de pi,  luego confirma el contenido de el destino con la fuente para que esten exactamente igual, finalmente manda un log al tmp de wsl y lo reenvia al destino y funciona ponienvo bash << el nombre del bash file>> << fuente>>. i.e. bash backup_script "/mnt/c/...../test" nota: asegurate que no haya un / al final 
+- dentro del bash file usa mucho ssh entonces la compu pedira por ssh credenciales a menos que establezcas un ssh keys
+- ssh-keygen -t rsa -b 4096  no passphrase > ssh-copy-id pi@ipaddress of pi  y ya no te pedira mas la contraseña
+- si demora en aparecer los contenidos en el nasau folder puede que solo tengas que esperar pero confirma yendo a ssh pi y viendo los contenidos del path a nasau 
+
+## anacron: 
+- anacron hara el backup cada sabado 10 minutos despues de prender la computadora
+- creamos un folder accesible en el envio nativo de wsl llamado scripts y con mkdir -p ~/scripts (osea home/akkarioh/scripts) 
+- pusimos el backup file y env en home/akkarioh/scripts y le dimos permisos de ejecucion con chmod +x ~/scripts
+- luego pusimos ese path en el anacron file abriendo sudo nano /etc/anacrontab
+- y para ejecutar y confirmar que funciona usamos sudo anacron -f -n 
+- para ver los logs de anacron usamos sudo cat /var/log/syslog | grep anacron
+
+
+
+
+
+
+
+backup_script y backup.env  se fueron a /usr/local/bin/
+
+
+
+
+
+
+
+### adicion a futuro: 
+crear un bridge con un modem viejo y conectar el NASAU por ahi 
+
+
+
+
+
+
+#### info de installation of nash to raspberry pi  //not finished 
+
+### Installation
+
+1. Install OS for Raspberry pi in the SD card using Raspberry pi imager
+```
+settings:
+-64bit OS lite with no desktop enviroment
+-SSH enable
+-user and password for pi
+
+```
+
+2. Steps for manual installation
+```
+- Put the SD card in the raspberry pi,
+- connect the ethernet cable to the Raspberry Pi and the other end of the cable to your router
+- then plug the pi to the outlet. wait 2 to 3 minutes until the lights are solid.
+```
+
+4. Clone the repository
+```
+git clone https://github.com/Pachakuteq/Backup_Nas_Sender.git
+```
+
+4. confirm Ip address of your Raspberry Pi using nmap
+```
+sudo apt install nmap
+
+# will show your ip and your subnet
+ip a
+
+# will show you all ip addresses that are being used in your network. make sure to use your subnet
+nmap -sn your-subnet/24
+
+# Or connect monitor and keyboard to Pi and run:
+hostname -I
+```
+
+5. With the IP address we use SSH to connect to the Raspberry Pi
+```
+# it will ask for user and password.
+ssh pi@ip-address-of-pi
+```
+
+4. We update and upgrade inside of SSH of Pi
+```
+sudo apt install && sudo apt upgrade -y
+```
+
+5. install Open Media Vault to the Pi
+```
+# it will take time
+sudo wget -O - https://raw.githubusercontent.com/OpenMediaVault-Plugin Developers/installScript/master/install | sudo bash
+```
+
+6. if SSH disconnects make sure that the ip address is still the same if not check with nmap again and ssh again
+```
+ssh pi@ip-address-of-pi
+
+```
+
+7. Go to your browser and 
