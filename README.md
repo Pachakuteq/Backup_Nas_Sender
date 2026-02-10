@@ -11,7 +11,7 @@ This script automatically backs up files from your laptop to a Raspberry Pi NAS 
 
 ## Built With
 
-- **hardware:** Raspberry Pi 3 B+, HDD 3.5" of 4TB storage, Ethernet cable, 64gb SD card.
+- **Hardware:** Raspberry Pi 3 B+, HDD 3.5" of 4TB storage, Ethernet cable, 64gb SD card.
 - **Software** WSL, Raspberry pi imager.
 
 ## Getting Started
