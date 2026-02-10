@@ -26,7 +26,7 @@ This script automatically backs up files from your laptop to a Raspberry Pi NAS 
 
 ### Installation
 
-1. if you dont have a NAS share folder please follow this video https://www.youtube.com/watch?v=gyMpI8csWis&t=338s
+1. if you don't have a NAS share folder please follow this video https://www.youtube.com/watch?v=gyMpI8csWis&t=338s
    
 2.  Clone the repository
 ```
