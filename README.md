@@ -127,16 +127,9 @@ Edit the second number in anacrontab:
 
 ## Future Enhancements
 
-- [ ] Send an email to me once the back up is complete with the full log
-- [ ] Possible connection using an old router as bridge
-- [ ] Change Hardware of Pi and the 4TB storage HDD
-
-## Contact
-
-Jose David Regalado Alvarado
-- LinkedIn: [LinkedIn Profile](https://linkedin.com/in/jose-david-regalado)
-- GitHub: [@Pachakuteq](https://github.com/Pachakuteq)
-- Email: jowav467@hotmail.com
+-  Send an email to me once the back up is complete with the full log
+-  Possible connection using an old router as bridge
+-  Change Hardware of Pi and the 4TB storage HDD
 
 ## Collaboration 
 
